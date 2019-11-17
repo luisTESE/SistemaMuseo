@@ -1,0 +1,2 @@
+Aqui esta la interfaz sin coneccion a SQL SERVER
+
