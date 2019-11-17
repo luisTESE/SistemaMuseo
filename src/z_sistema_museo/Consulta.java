@@ -8,10 +8,11 @@ public class Consulta extends javax.swing.JPanel {
     
     DefaultTableModel tabla = new DefaultTableModel();
     String nomE = "", musE = "";
-
+    
     // agregrar datos
     public Consulta() {
         initComponents();
+        
     }
 
     // formato tabla
@@ -252,11 +253,13 @@ public class Consulta extends javax.swing.JPanel {
 
     private void MuseoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MuseoEActionPerformed
         // Museo E
+        co.consulta("registro");
         setModeloMuseE();
     }//GEN-LAST:event_MuseoEActionPerformed
 
     private void ExposicionEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExposicionEActionPerformed
         // Exposicion E
+        co.consulta("exposicion");
         setModeloExpoE();
     }//GEN-LAST:event_ExposicionEActionPerformed
 

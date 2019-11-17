@@ -8,6 +8,8 @@ public class Bienvenido extends javax.swing.JFrame {
     Exposicion expo = new Exposicion();
     Consulta consul = new Consulta();
     Actualizar act = new Actualizar();
+    
+    
     public Bienvenido() {
         initComponents();
         this.setSize(1400,575);
