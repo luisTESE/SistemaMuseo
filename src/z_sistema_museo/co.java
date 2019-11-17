@@ -20,13 +20,14 @@ public class co {
             String connectionURL = "jdbc:sqlserver://DESKTOP-GJ22AG6:1433;databaseName=museo;user=Museo;password=321;";
             Connection con = DriverManager.getConnection(connectionURL);
             //System.out.println("Coneccion");
-
+            
+            C(con);
+            /*
             // aqui comienza la instrucion
             Statement st = con.createStatement(); // activa la instrucion
             
             
             if (tabla.equals("exposicion")) {// para eliminar exposicion
-                System.out.println(tabla);
                 ResultSet rs = st.executeQuery("select * from " + tabla);
                 while (rs.next()) {
                     titulo_obra = rs.getString(1);
@@ -39,13 +40,21 @@ public class co {
                     nombreMuseo = rs.getString(1);
                     System.out.println(nombreMuseo);
                 }
-            }
+            }*/
         } catch (SQLException ex) {
             Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }//main
+    
+    public static void C(Connection c){
+        try {
+            Statement st = c.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

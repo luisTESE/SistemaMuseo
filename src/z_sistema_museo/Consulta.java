@@ -1,18 +1,22 @@
 package z_sistema_museo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Consulta extends javax.swing.JPanel {
-    
+
     DefaultTableModel tabla = new DefaultTableModel();
     String nomE = "", musE = "";
-    
+
     // agregrar datos
     public Consulta() {
         initComponents();
-        
+
     }
 
     // formato tabla
@@ -21,25 +25,25 @@ public class Consulta extends javax.swing.JPanel {
         tabla.setColumnIdentifiers(cabecera);
         consulta.setModel(tabla);
     }
-    
+
     private void setModeloMuse() {
         String[] cabecera = {"nombre museo", "hora entrada", "hora salida", "tipo museo", "CP", "calle", "numero", "colonia", "muncipio"};
         tabla.setColumnIdentifiers(cabecera);
         consulta.setModel(tabla);
     }
-    
+
     private void setModeloExpoE() {
         String[] cabecera = {"titulo de la obra"};
         tabla.setColumnIdentifiers(cabecera);
         consultaE.setModel(tabla);
     }
-    
+
     private void setModeloMuseE() {
         String[] cabecera = {"nombre museo"};
         tabla.setColumnIdentifiers(cabecera);
         consultaE.setModel(tabla);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -253,24 +257,40 @@ public class Consulta extends javax.swing.JPanel {
 
     private void MuseoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MuseoEActionPerformed
         // Museo E
-        co.consulta("registro");
-        setModeloMuseE();
+        
     }//GEN-LAST:event_MuseoEActionPerformed
 
     private void ExposicionEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExposicionEActionPerformed
         // Exposicion E
-        co.consulta("exposicion");
-        setModeloExpoE();
+        try{
+            String[] cabecera = {"titulo de la obra"};
+            String[][] datos = new String[5][1];
+            Statement st = Bienvenido.conecionP.createStatement(); // activa la instrucion
+            ResultSet rs = st.executeQuery("select * from exposicion");
+            //ResultSet conteo = st.executeQuery("select count(titulo_obra) from exposicion");
+            //System.out.println(conteo);
+            int i=0;
+            while (rs.next()) {
+                String titulo_obra = rs.getString(1);
+                datos[i][0]= titulo_obra;
+                System.out.println(titulo_obra);
+                i++;
+            }
+            consultaE.setModel(new DefaultTableModel(datos, cabecera));
+        }catch (SQLException ex) {
+            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
     }//GEN-LAST:event_ExposicionEActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         // Eliminar
         musE = mE.getText();
         nomE = eE.getText();
-        
-        if (musE.equals("") && nomE.equals("") ) {
+
+        if (musE.equals("") && nomE.equals("")) {
             JOptionPane.showMessageDialog(null, "Esta vacio");
-        }else{
+        } else {
             System.out.println("Si");
         }
     }//GEN-LAST:event_EliminarActionPerformed

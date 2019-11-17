@@ -1,26 +1,47 @@
-
 package z_sistema_museo;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Bienvenido extends javax.swing.JFrame {
-    
+
     regi registro = new regi();
     saludo saludo = new saludo();
     Exposicion expo = new Exposicion();
     Consulta consul = new Consulta();
     Actualizar act = new Actualizar();
-    
+    public static Connection conecionP;
     
     public Bienvenido() {
         initComponents();
-        this.setSize(1400,575);
+        this.setSize(1400, 575);
         this.setResizable(false);
-        
+
         contenedor.add(saludo);
         saludo.setVisible(true);
         registro.setVisible(false);
         expo.setVisible(false);
         consul.setVisible(false);
         act.setVisible(false);
+        Conecion();
+    }
+
+    public static void Conecion() {
+        try {
+            // SQL
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String connectionURL = "jdbc:sqlserver://DESKTOP-GJ22AG6:1433;databaseName=museo;user=Museo;password=321;";
+            Connection con = DriverManager.getConnection(connectionURL);
+            conecionP = con;
+            System.out.println("Coneccion");
+        } catch (SQLException ex) {
+            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -143,7 +164,7 @@ public class Bienvenido extends javax.swing.JFrame {
         consul.setVisible(false);
         act.setVisible(true);
         contenedor.add(act);
-        
+
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     public static void main(String args[]) {
