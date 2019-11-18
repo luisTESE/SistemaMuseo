@@ -1,5 +1,6 @@
 package z_sistema_museo;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,31 +18,6 @@ public class Consulta extends javax.swing.JPanel {
     public Consulta() {
         initComponents();
 
-    }
-
-    // formato tabla
-    private void setModeloExpo() {
-        String[] cabecera = {"titulo de la obra", "descripcion", "fecha inicio", "fecha final", "nombre museo"};
-        tabla.setColumnIdentifiers(cabecera);
-        consulta.setModel(tabla);
-    }
-
-    private void setModeloMuse() {
-        String[] cabecera = {"nombre museo", "hora entrada", "hora salida", "tipo museo", "CP", "calle", "numero", "colonia", "muncipio"};
-        tabla.setColumnIdentifiers(cabecera);
-        consulta.setModel(tabla);
-    }
-
-    private void setModeloExpoE() {
-        String[] cabecera = {"titulo de la obra"};
-        tabla.setColumnIdentifiers(cabecera);
-        consultaE.setModel(tabla);
-    }
-
-    private void setModeloMuseE() {
-        String[] cabecera = {"nombre museo"};
-        tabla.setColumnIdentifiers(cabecera);
-        consultaE.setModel(tabla);
     }
 
     @SuppressWarnings("unchecked")
@@ -247,40 +223,179 @@ public class Consulta extends javax.swing.JPanel {
 
     private void exposcionCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exposcionCActionPerformed
         // Exposcion C
-        setModeloExpo();
+
+        try {
+            String[] cabecera = {"titulo de la obra", "descripcion", "fecha inicio", "fecha final", "nombre museo"};
+
+            // conteo de que hay
+            Statement coun = Bienvenido.conecionP.createStatement();
+            ResultSet tama = coun.executeQuery("select count(*) from exposicion");
+            tama.next();
+            int tamañoDatos = tama.getInt(1);
+            //System.out.println(tamañoDatos);
+            System.out.println(cabecera.length);
+            String[][] datos = new String[tamañoDatos][cabecera.length];
+
+            // impresion
+            Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
+            ResultSet rs = st.executeQuery("select * FROM exposicion ex\n"
+                    + "inner join fecha fe ON ex.id_fecha =  fe.id_fecha\n"
+                    + "\n"
+                    + "inner join registro re ON ex.nombreM = re.nombreM\n"
+                    + "inner join horario ho ON re.id_horario = ho.id_horario");
+
+            int i = 0;
+            while (rs.next()) {
+                String tituloObra = rs.getString(1);
+                String descripcion = rs.getString(2);
+                String nombreM = rs.getString(4);
+                String fechaI = rs.getString(6);
+                String fechaF = rs.getString(7);
+                
+                datos[i][0] = tituloObra;
+                datos[i][1] = descripcion;
+                datos[i][2] = nombreM;
+                datos[i][3] = fechaI;
+                datos[i][4] = fechaF;
+                i++;
+            }
+
+            for (int j = 0; j < datos.length; j++) {
+                for (int k = 0; k < datos[0].length; k++) {
+                    //System.out.println(datos[j][k]);
+                }
+            }
+            consulta.setModel(new DefaultTableModel(datos, cabecera));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_exposcionCActionPerformed
 
     private void museoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_museoCActionPerformed
         // Museo C
-        setModeloMuse();
+        try {
+            String[] cabecera = {"nombre museo", "hora entrada", "hora salida", "tipo museo", "CP", "calle", "numero", "colonia", "muncipio"};
+
+            // conteo de que hay
+            Statement coun = Bienvenido.conecionP.createStatement();
+            ResultSet tama = coun.executeQuery("select count(*) from registro");
+            tama.next();
+            int tamañoDatos = tama.getInt(1);
+            //System.out.println(tamañoDatos);
+            String[][] datos = new String[tamañoDatos][cabecera.length];
+
+            // impresion
+            Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
+            ResultSet rs = st.executeQuery("SELECT * FROM registro re\n"
+                    + "inner join horario ho ON re.id_horario = ho.id_horario\n"
+                    + "\n"
+                    + "inner join cp p ON p.id_cp = re.id_cp\n"
+                    + "inner join calle ca on p.id_calle = ca.id_calle\n"
+                    + "inner join numero n on ca.id_numero = n.id_numero\n"
+                    + "inner join colonia co on n.id_colonia = co.id_colonia\n"
+                    + "inner join municipio m on co.id_municipio = m.id_municipio\n"
+                    + "\n"
+                    + "inner join tipoMuseo tm ON tm.id_tipoM = re.id_tipoM");
+
+            int i = 0;
+            while (rs.next()) {
+                String nombreM = rs.getString(1);
+                String horaE = rs.getString(6);
+                String horaS = rs.getString(7);
+                String cp = rs.getString(9);
+                String calle = rs.getString(12);
+                String numero = rs.getString(15);
+                String colonia = rs.getString(18);
+                String municipio = rs.getString(21);
+                String tipoM = rs.getString(23);
+                
+                datos[i][0] = nombreM;
+                datos[i][1] = horaE;
+                datos[i][2] = horaS;
+                datos[i][3] = tipoM;
+                datos[i][4] = cp;
+                datos[i][5] = calle;
+                datos[i][6] = numero;
+                datos[i][7] = colonia;
+                datos[i][8] = municipio;
+                
+                i++;
+            }
+
+            for (int j = 0; j < datos.length; j++) {
+                for (int k = 0; k < datos[0].length; k++) {
+                    //System.out.println(datos[j][k]);
+                }
+            }
+            consulta.setModel(new DefaultTableModel(datos, cabecera));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_museoCActionPerformed
 
     private void MuseoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MuseoEActionPerformed
         // Museo E
-        
+        try {
+            String[] cabecera = {"Nombre de Museo"};
+
+            // conteo de que hay
+            Statement coun = Bienvenido.conecionP.createStatement();
+            ResultSet tama = coun.executeQuery("select count(*) from registro");
+            tama.next();
+            int tamañoDatos = tama.getInt(1);
+            //System.out.println(tamañoDatos);
+            String[][] datos = new String[tamañoDatos][cabecera.length];
+
+            // impresion
+            Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
+            ResultSet rs = st.executeQuery("select * from registro");
+
+            int i = 0;
+            while (rs.next()) {
+                String nombreM = rs.getString(1);
+                datos[i][0] = nombreM;
+                //System.out.println(titulo_obra);
+                i++;
+            }
+            consultaE.setModel(new DefaultTableModel(datos, cabecera));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MuseoEActionPerformed
 
     private void ExposicionEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExposicionEActionPerformed
         // Exposicion E
-        try{
+        try {
             String[] cabecera = {"titulo de la obra"};
-            String[][] datos = new String[5][1];
-            Statement st = Bienvenido.conecionP.createStatement(); // activa la instrucion
+
+            // conteo de que hay
+            Statement coun = Bienvenido.conecionP.createStatement();
+            ResultSet tama = coun.executeQuery("select count(*) from exposicion");
+            tama.next();
+            int tamañoDatos = tama.getInt(1);
+            //System.out.println(tamañoDatos);
+            String[][] datos = new String[tamañoDatos][cabecera.length];
+
+            // impresion
+            Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
             ResultSet rs = st.executeQuery("select * from exposicion");
-            //ResultSet conteo = st.executeQuery("select count(titulo_obra) from exposicion");
-            //System.out.println(conteo);
-            int i=0;
+
+            int i = 0;
             while (rs.next()) {
                 String titulo_obra = rs.getString(1);
-                datos[i][0]= titulo_obra;
-                System.out.println(titulo_obra);
+                datos[i][0] = titulo_obra;
+                //System.out.println(titulo_obra);
                 i++;
             }
             consultaE.setModel(new DefaultTableModel(datos, cabecera));
-        }catch (SQLException ex) {
+
+        } catch (SQLException ex) {
             Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
     }//GEN-LAST:event_ExposicionEActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
