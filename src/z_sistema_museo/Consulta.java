@@ -251,7 +251,7 @@ public class Consulta extends javax.swing.JPanel {
                 String nombreM = rs.getString(4);
                 String fechaI = rs.getString(6);
                 String fechaF = rs.getString(7);
-                
+
                 datos[i][0] = tituloObra;
                 datos[i][1] = descripcion;
                 datos[i][2] = nombreM;
@@ -309,7 +309,7 @@ public class Consulta extends javax.swing.JPanel {
                 String colonia = rs.getString(18);
                 String municipio = rs.getString(21);
                 String tipoM = rs.getString(23);
-                
+
                 datos[i][0] = nombreM;
                 datos[i][1] = horaE;
                 datos[i][2] = horaS;
@@ -319,7 +319,7 @@ public class Consulta extends javax.swing.JPanel {
                 datos[i][6] = numero;
                 datos[i][7] = colonia;
                 datos[i][8] = municipio;
-                
+
                 i++;
             }
 
@@ -406,6 +406,55 @@ public class Consulta extends javax.swing.JPanel {
         if (musE.equals("") && nomE.equals("")) {
             JOptionPane.showMessageDialog(null, "Esta vacio");
         } else {
+            if (!musE.equals("")) {
+                System.out.println();
+
+            }
+            if (!nomE.equals("")) {
+                try {
+                    System.out.println(nomE);
+                    // cuantos hay para el arreglo
+                    Statement coun = Bienvenido.conecionP.createStatement();
+                    ResultSet tama = coun.executeQuery("select count(*) from exposicion");
+                    tama.next();
+                    int tamañoDatos = tama.getInt(1);
+                    String[] datos = new String[tamañoDatos];
+
+                    // guardar datos 
+                    Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
+                    ResultSet rs = st.executeQuery("select * from exposicion");
+
+                    int i = 0;
+                    while (rs.next()) {
+                        String titulo_obra = rs.getString(1);
+                        datos[i] = titulo_obra;
+                        i++;
+                    }
+                    
+                    // comprobar si existe
+                    boolean existe = false;
+                    for (int j = 0; j < datos.length; j++) {
+                        //System.out.println(nomE+" == "+datos[j]);
+                        if(nomE.equals(datos[j])){
+                            existe = true;
+                        }
+                    }
+                    
+                    if(existe){
+                        // eliminar la exposicion
+                        System.out.println("si existe"+ nomE);
+                        Statement eliminar = Bienvenido.conecionP.createStatement();
+                        eliminar.execute("delete exposicion where titulo_obra = '"+nomE+"'");// eliminar Exposicion SQL
+                        JOptionPane.showMessageDialog(null, "Eliminado");
+                        
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No existe en la base de datos " + nomE);
+                    }
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(Consulta.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             System.out.println("Si");
         }
     }//GEN-LAST:event_EliminarActionPerformed
