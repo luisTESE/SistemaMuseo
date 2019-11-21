@@ -36,7 +36,6 @@ public class Consulta extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         consultaE = new javax.swing.JTable();
         MuseoE = new javax.swing.JButton();
-        ExposicionE = new javax.swing.JButton();
         mE = new javax.swing.JTextField();
         eE = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -84,7 +83,7 @@ public class Consulta extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(364, 364, 364)
                 .addComponent(jLabel1)
-                .addContainerGap(396, Short.MAX_VALUE))
+                .addContainerGap(432, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(167, 167, 167)
                 .addComponent(museoC)
@@ -122,18 +121,10 @@ public class Consulta extends javax.swing.JPanel {
         jScrollPane2.setViewportView(consultaE);
 
         MuseoE.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
-        MuseoE.setText("Museos");
+        MuseoE.setText("Museo y Exposicion");
         MuseoE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MuseoEActionPerformed(evt);
-            }
-        });
-
-        ExposicionE.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
-        ExposicionE.setText("Exposciones");
-        ExposicionE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExposicionEActionPerformed(evt);
             }
         });
 
@@ -154,30 +145,29 @@ public class Consulta extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mE, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(75, 75, 75)
-                        .addComponent(eE, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(Eliminar)
                 .addGap(310, 310, 310))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MuseoE)
-                    .addComponent(ExposicionE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(mE, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(75, 75, 75)
+                                .addComponent(eE, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(MuseoE)
+                        .addGap(49, 49, 49)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,21 +178,19 @@ public class Consulta extends javax.swing.JPanel {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(Eliminar)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(eE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(eE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(MuseoE)
-                        .addGap(18, 18, 18)
-                        .addComponent(ExposicionE)
-                        .addGap(198, 198, 198))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(97, Short.MAX_VALUE))))
+                        .addGap(206, 206, 206))))
         );
 
         jTabbedPane1.addTab("Eliminar", jPanel2);
@@ -337,12 +325,14 @@ public class Consulta extends javax.swing.JPanel {
 
     private void MuseoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MuseoEActionPerformed
         // Museo E
-        try {
-            String[] cabecera = {"Nombre de Museo"};
+       try {
+            String[] cabecera = {"titulo de la obra", "Nombre del Museo"};
 
-            // conteo de que hay
+            // conteo de que hay 
             Statement coun = Bienvenido.conecionP.createStatement();
-            ResultSet tama = coun.executeQuery("select count(*) from registro");
+            ResultSet tama = coun.executeQuery("select count(*) FROM exposicion ex\n"
+                    + "right join registro re \n"
+                    + "ON ex.nombreM = re.nombreM");
             tama.next();
             int tamañoDatos = tama.getInt(1);
             //System.out.println(tamañoDatos);
@@ -350,13 +340,18 @@ public class Consulta extends javax.swing.JPanel {
 
             // impresion
             Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
-            ResultSet rs = st.executeQuery("select * from registro");
+            ResultSet rs = st.executeQuery("select * FROM exposicion ex\n"
+                    + "right join registro re \n"
+                    + "ON ex.nombreM = re.nombreM");
 
             int i = 0;
             while (rs.next()) {
-                String nombreM = rs.getString(1);
-                datos[i][0] = nombreM;
-                //System.out.println(titulo_obra);
+                String titulo_obra = rs.getString(1);
+                String nomM = rs.getString(5);
+                
+                datos[i][0] = titulo_obra;
+                datos[i][1] = nomM;
+                //System.out.println(titulo_obra + " " + nomM);
                 i++;
             }
             consultaE.setModel(new DefaultTableModel(datos, cabecera));
@@ -365,38 +360,6 @@ public class Consulta extends javax.swing.JPanel {
             Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_MuseoEActionPerformed
-
-    private void ExposicionEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExposicionEActionPerformed
-        // Exposicion E
-        try {
-            String[] cabecera = {"titulo de la obra"};
-
-            // conteo de que hay
-            Statement coun = Bienvenido.conecionP.createStatement();
-            ResultSet tama = coun.executeQuery("select count(*) from exposicion");
-            tama.next();
-            int tamañoDatos = tama.getInt(1);
-            //System.out.println(tamañoDatos);
-            String[][] datos = new String[tamañoDatos][cabecera.length];
-
-            // impresion
-            Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
-            ResultSet rs = st.executeQuery("select * from exposicion");
-
-            int i = 0;
-            while (rs.next()) {
-                String titulo_obra = rs.getString(1);
-                datos[i][0] = titulo_obra;
-                //System.out.println(titulo_obra);
-                i++;
-            }
-            consultaE.setModel(new DefaultTableModel(datos, cabecera));
-
-        } catch (SQLException ex) {
-            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_ExposicionEActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         // Eliminar
@@ -438,7 +401,8 @@ public class Consulta extends javax.swing.JPanel {
                     
                     if(existe){
                         // eliminar la exposicion
-                        System.out.println("si existe"+ musE);
+                        Statement eliminarexpo = Bienvenido.conecionP.createStatement();
+                        eliminarexpo.execute("delete exposicion where nombreM = '"+musE+"'");
                         Statement eliminar = Bienvenido.conecionP.createStatement();
                         eliminar.execute("delete registro where nombreM = '"+musE+"'");// eliminar Exposicion SQL
                         JOptionPane.showMessageDialog(null, "Eliminado");
@@ -462,7 +426,7 @@ public class Consulta extends javax.swing.JPanel {
                     int tamañoDatos = tama.getInt(1);
                     String[] datos = new String[tamañoDatos];
 
-                    // guardar datos 
+                    // verificar si la exposicion existe
                     Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
                     ResultSet rs = st.executeQuery("select * from exposicion");
 
@@ -504,7 +468,6 @@ public class Consulta extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Eliminar;
-    private javax.swing.JButton ExposicionE;
     private javax.swing.JButton MuseoE;
     private javax.swing.JTable consulta;
     private javax.swing.JTable consultaE;

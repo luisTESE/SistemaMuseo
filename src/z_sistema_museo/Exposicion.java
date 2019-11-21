@@ -1,6 +1,12 @@
 package z_sistema_museo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Exposicion extends javax.swing.JPanel {
 
@@ -21,7 +27,7 @@ public class Exposicion extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        rExpo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         descripcion = new javax.swing.JTextArea();
         nombreMuseo = new javax.swing.JTextField();
@@ -40,7 +46,7 @@ public class Exposicion extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        consultaE = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
 
         setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
@@ -60,10 +66,10 @@ public class Exposicion extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         jLabel5.setText("Fecha de Fin");
 
-        jButton1.setText("Exposicion");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        rExpo.setText("registro Exposicion");
+        rExpo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                rExpoActionPerformed(evt);
             }
         });
 
@@ -92,20 +98,25 @@ public class Exposicion extends javax.swing.JPanel {
         jLabel12.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         jLabel12.setText("año");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        consultaE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(consultaE);
 
         jButton2.setText("Exposicion");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -132,7 +143,7 @@ public class Exposicion extends javax.swing.JPanel {
                                     .addComponent(jLabel5))
                                 .addGap(44, 44, 44)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
+                                    .addComponent(rExpo)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(diaI, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
@@ -212,15 +223,15 @@ public class Exposicion extends javax.swing.JPanel {
                             .addComponent(anoF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))
                         .addGap(53, 53, 53)
-                        .addComponent(jButton1)
+                        .addComponent(rExpo)
                         .addGap(86, 86, 86))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(48, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void rExpoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rExpoActionPerformed
         // Registro de Exposicion
         nombreM = nombreMuseo.getText();
         tituloM = tituloObra.getText();
@@ -235,14 +246,14 @@ public class Exposicion extends javax.swing.JPanel {
         mF = mesF.getText();
         aF = anoF.getText();
 
-        System.out.println(nombreM + tituloM + dI + mI + aI + dF + mF + aF + desc);
+        //System.out.println(nombreM + tituloM + dI + mI + aI + dF + mF + aF + desc);
 
         if (nombreM.equals("") || tituloM.equals("")
                 || dI.equals("") || mI.equals("") || aI.equals("")
                 || dF.equals("") || mF.equals("") || aF.equals("")
                 || desc.equals("")) {
 
-            System.out.println("No");
+            JOptionPane.showMessageDialog(null, "Esta vacio");
         } else {
             if (Integer.parseInt(dI) > 30 || Integer.parseInt(dF) > 30
                     || Integer.parseInt(dI) == 0 || Integer.parseInt(dF) == 0
@@ -250,37 +261,94 @@ public class Exposicion extends javax.swing.JPanel {
                     || Integer.parseInt(mI) == 0 || Integer.parseInt(mF) == 0
                     || dI.length() > 2 || dF.length() > 2 || mI.length() > 2 || mF.length() > 2
                     || aI.length() != 4 || aF.length() != 4) {
-                
-                if(Integer.parseInt(dI) > 30 || Integer.parseInt(dF) > 30
-                        || Integer.parseInt(dI) == 30 || Integer.parseInt(dF) == 30){
+
+                if (Integer.parseInt(dI) > 30 || Integer.parseInt(dF) > 30
+                        || Integer.parseInt(dI) == 30 || Integer.parseInt(dF) == 30) {
                     JOptionPane.showMessageDialog(null, "EL dia se pasa de 30 o es 0");
                 }
-                if(Integer.parseInt(mI) > 12 || Integer.parseInt(mF) > 12
-                    || Integer.parseInt(mI) == 0 || Integer.parseInt(mF) == 0){
+                if (Integer.parseInt(mI) > 12 || Integer.parseInt(mF) > 12
+                        || Integer.parseInt(mI) == 0 || Integer.parseInt(mF) == 0) {
                     JOptionPane.showMessageDialog(null, "EL mes se pasa de 12 o es 0");
                 }
-                if(dI.length() > 2 || dF.length() > 2 || mI.length() > 2 || mF.length() > 2){
+                if (dI.length() > 2 || dF.length() > 2 || mI.length() > 2 || mF.length() > 2) {
                     JOptionPane.showMessageDialog(null, "dia o mes tienen mas de 2 digitos");
-                }if(aI.length() != 4 || aF.length() != 4){
+                }
+                if (aI.length() != 4 || aF.length() != 4) {
                     JOptionPane.showMessageDialog(null, "año tiene que tener 4 digitos");
                 }
 
             } else {
-                System.out.println("Si");
+                try {
+                    //System.out.println(nombreM + tituloM + dI + mI + aI + dF + mF + aF + desc);
+                    int id_fecha = 0;
+                    // conteo de cuantos hay
+                    Statement coun = Bienvenido.conecionP.createStatement();
+                    ResultSet tama = coun.executeQuery("select count(*) from fecha");
+                    tama.next();
+                    int tamañoDatos = tama.getInt(1);
+                    id_fecha = tamañoDatos + 1;
+                    System.out.println(id_fecha);
+                    // insertar la exposicion
+                    Statement agregarfecha = Bienvenido.conecionP.createStatement();
+                    agregarfecha.execute("insert into fecha values(" + id_fecha + ",'" + aI + "/" + mI + "/" + dI + "','" + aF + "/" + mF + "/" + dF + "')");
+                    Statement agregarexpo = Bienvenido.conecionP.createStatement();
+                    agregarexpo.execute("insert into exposicion values('" + tituloM + "','" + desc + "'," + id_fecha + ",'" + nombreM + "')");
+                    JOptionPane.showMessageDialog(null, "Agregado");
+                } catch (SQLException ex) {
+                    Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_rExpoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //Consulta Expo
+        try {
+            String[] cabecera = {"titulo de la obra", "Nombre del Museo"};
+
+            // conteo de que hay 
+            Statement coun = Bienvenido.conecionP.createStatement();
+            ResultSet tama = coun.executeQuery("select count(*) FROM exposicion ex\n"
+                    + "right join registro re \n"
+                    + "ON ex.nombreM = re.nombreM");
+            tama.next();
+            int tamañoDatos = tama.getInt(1);
+            //System.out.println(tamañoDatos);
+            String[][] datos = new String[tamañoDatos][cabecera.length];
+
+            // impresion
+            Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
+            ResultSet rs = st.executeQuery("select * FROM exposicion ex\n"
+                    + "right join registro re \n"
+                    + "ON ex.nombreM = re.nombreM");
+
+            int i = 0;
+            while (rs.next()) {
+                String titulo_obra = rs.getString(1);
+                String nomM = rs.getString(5);
+                
+                datos[i][0] = titulo_obra;
+                datos[i][1] = nomM;
+                //System.out.println(titulo_obra + " " + nomM);
+                i++;
+            }
+            consultaE.setModel(new DefaultTableModel(datos, cabecera));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField anoF;
     private javax.swing.JTextField anoI;
+    private javax.swing.JTable consultaE;
     private javax.swing.JTextArea descripcion;
     private javax.swing.JTextField diaF;
     private javax.swing.JTextField diaI;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -296,10 +364,10 @@ public class Exposicion extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField mesF;
     private javax.swing.JTextField mesI;
     private javax.swing.JTextField nombreMuseo;
+    private javax.swing.JButton rExpo;
     private javax.swing.JTextField tituloObra;
     // End of variables declaration//GEN-END:variables
 }
