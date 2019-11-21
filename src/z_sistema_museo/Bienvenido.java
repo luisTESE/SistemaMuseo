@@ -33,7 +33,8 @@ public class Bienvenido extends javax.swing.JFrame {
         try {
             // SQL
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String connectionURL = "jdbc:sqlserver://DESKTOP-GJ22AG6:1433;databaseName=museo;user=Museo;password=321;";
+            //String connectionURL = "jdbc:sqlserver://DESKTOP-GJ22AG6:1433;databaseName=museo;user=Museo;password=321;";
+            String connectionURL = "jdbc:sqlserver://localhost:1433;databaseName=museo;user=sa;password=sasa;";
             Connection con = DriverManager.getConnection(connectionURL);
             conecionP = con;
             System.out.println("Coneccion");
