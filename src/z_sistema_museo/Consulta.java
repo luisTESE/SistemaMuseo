@@ -407,7 +407,49 @@ public class Consulta extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Esta vacio");
         } else {
             if (!musE.equals("")) {
-                System.out.println();
+                try {
+                    System.out.println(musE);
+                    // cuantos hay para el arreglo
+                    Statement coun = Bienvenido.conecionP.createStatement();
+                    ResultSet tama = coun.executeQuery("select count(*) from registro");
+                    tama.next();
+                    int tamañoDatos = tama.getInt(1);
+                    String[] datos = new String[tamañoDatos];
+
+                    // guardar datos 
+                    Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
+                    ResultSet rs = st.executeQuery("select * from registro");
+
+                    int i = 0;
+                    while (rs.next()) {
+                        String titulo_obra = rs.getString(1);
+                        datos[i] = titulo_obra;
+                        i++;
+                    }
+                    
+                    // comprobar si existe
+                    boolean existe = false;
+                    for (int j = 0; j < datos.length; j++) {
+                        //System.out.println(nomE+" == "+datos[j]);
+                        if(musE.equals(datos[j])){
+                            existe = true;
+                        }
+                    }
+                    
+                    if(existe){
+                        // eliminar la exposicion
+                        System.out.println("si existe"+ musE);
+                        Statement eliminar = Bienvenido.conecionP.createStatement();
+                        eliminar.execute("delete registro where nombreM = '"+musE+"'");// eliminar Exposicion SQL
+                        JOptionPane.showMessageDialog(null, "Eliminado");
+                        
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No existe en la base de datos Museo " + musE);
+                    }
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(Consulta.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
             if (!nomE.equals("")) {
