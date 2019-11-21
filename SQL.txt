@@ -1,0 +1,5 @@
+SQLServerManager14.msc para SQL Server 2017
+SQLServerManager13.msc para SQL Server 2016
+SQLServerManager12.msc para SQL Server 2014
+SQLServerManager11.msc para SQL Server 2012
+SQLServerManager10.msc para SQL Server 2008
