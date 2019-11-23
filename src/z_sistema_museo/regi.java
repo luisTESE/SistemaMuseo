@@ -20,74 +20,19 @@ public class regi extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void existe(String tabla, String consultar, String NL) {
-        try {
-            ya_esta = false;
-            int count = 0;
-            String[] datos;
-            // variable Arreglo de apoyo
-            Statement c1 = Bienvenido.conecionP.createStatement();
-            ResultSet c11 = c1.executeQuery("select count(*) from " + tabla);
-            c11.next();
-            count = c11.getInt(1);
-            datos = new String[count];
-            // municipio
-            Statement verificarMuni = Bienvenido.conecionP.createStatement();
-            ResultSet rsMu = verificarMuni.executeQuery("select * from " + tabla);
-
-            int i = 0;
-            while (rsMu.next()) {
-                String dato = rsMu.getString(2);
-                datos[i] = dato;
-                i++;
-            }
-
-            // existe
-            boolean existeC = false;
-            for (int j = 0; j < datos.length; j++) {
-                //System.out.println(nomE+" == "+datos[j]);
-                if (consultar.equals(datos[j])) {
-                    existeC = true;
-                }
-            }
-            ID = 0;
-            if (NL.equals("L")) {
-                if (existeC) {
-                    //select from 
-                    Statement counyes = Bienvenido.conecionP.createStatement();
-                    ResultSet tamayes = counyes.executeQuery("Select * from " + tabla + " where " + tabla + "='" + consultar + "'");
-                    tamayes.next();
-                    ID = tamayes.getInt(1);
-                    ya_esta = true;
-
-                } else {
-                    Statement coun = Bienvenido.conecionP.createStatement();
-                    ResultSet tama = coun.executeQuery("select count(*) from " + tabla);
-                    tama.next();
-                    int tamañoDatos = tama.getInt(1);
-                    ID = tamañoDatos + 1;
-                }
-            } else if (NL.equals("N")) {
-                if (existeC) {
-                    //select from 
-                    Statement counyes = Bienvenido.conecionP.createStatement();
-                    ResultSet tamayes = counyes.executeQuery("Select * from " + tabla + " where " + tabla + "=" + consultar + "");
-                    tamayes.next();
-                    ID = tamayes.getInt(1);
-                    ya_esta = true;
-                } else {
-                    Statement coun = Bienvenido.conecionP.createStatement();
-                    ResultSet tama = coun.executeQuery("select count(*) from " + tabla);
-                    tama.next();
-                    int tamañoDatos = tama.getInt(1);
-                    ID = tamañoDatos + 1;
-                }
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(co.class.getName()).log(Level.SEVERE, null, ex);
+    public void ID(String tabla) {
+        try{
+        Statement coun = Bienvenido.conecionP.createStatement();
+        ResultSet tama = coun.executeQuery("select count(*) from " + tabla);
+        tama.next();
+        int tamañoDatos = tama.getInt(1);
+        ID = tamañoDatos + 1;
+        }catch(SQLException e){
+            e.printStackTrace();
         }
     }
+
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -476,58 +421,65 @@ public class regi extends javax.swing.JPanel {
                             + cp1 + calle1 + num + col + mun
                             + tipM
                             + vitri + most + mostP + siE + ban);
-                    int aux = 0;
+                    int aux = 0,ID_cp=0,ID_tipoM=0,ID_horario=0;
                     Statement inser = Bienvenido.conecionP.createStatement();
+                    
+                    
                     //municipio
-                    existe("municipio", mun, "L");
-                    if (ya_esta) {
-                        aux = ID;
-                    } else {
-                        System.out.println(ID);
-                        inser.execute("insert into municipio values(" + ID + ",'" + mun + "')");
-                        aux = ID;
-                    }
-
+                    ID("municipio");
+                    inser.execute("insert into municipio values(" + ID + ",'" + mun + "')");
+                    aux = ID;
+                    
+                    
+                    
                     //colonia
-                    existe("colonia", col, "L");
-                    if (ya_esta) {
-                        aux = ID;
-                    } else {
-                        System.out.println(ID);
-                        inser.execute("insert into colonia values(" + ID + ",'" + col + "'," + aux + ")");
-                        aux = ID;
-                    }
+                    ID("colonia");
+                    inser.execute("insert into colonia values(" + ID + ",'" + col + "'," + aux + ")");
+                    aux = ID;
+                    
 
                     // numero
-                    existe("numero", num, "N");
-                    if (ya_esta) {
-                        aux = ID;
-                    } else {
-                        inser.execute("insert into numero values(" + ID + "," + num + "," + aux + ")");
-                        System.out.println(ID);
-                        aux = ID;
-                    }
+                    ID("numero");
+                    inser.execute("insert into numero values(" + ID + "," + num + "," + aux + ")");
+                    aux = ID;
+                    
+                    
 
                     //calle
-                    existe("calle", calle1, "L");
-                    if (ya_esta) {
-                        aux = ID;
-                    } else {
-                        System.out.println(ID);
-                        inser.execute("insert into calle values(" + ID + ",'" + calle1 + "'," + aux + ")");
-                        aux = ID;
-                    }
+                    ID("calle");
+                    inser.execute("insert into calle values(" + ID + ",'" + calle1 + "'," + aux + ")");
+                    aux = ID;
+                    
+                    
 
                     //cp
-                    existe("cp", cp1, "L");
-                    if (ya_esta) {
-                        aux = ID;
-                    } else {
-                        System.out.println(ID);
-                        inser.execute("insert into cp values(" + ID + "," + cp1 + "," + aux + ")");
-                        aux = ID;
-                    }
-
+                    ID("cp");
+                    ID_cp = ID;
+                    inser.execute("insert into cp values(" + ID + "," + cp1 + "," + aux + ")");
+                    aux = ID;
+                    
+                    
+                    // ========================================== mobilirario y tipo
+                    ID("mobiliario");
+                    inser.execute("insert into mobiliario values("+ID+","+vitri+","+most+","+mostP+","+siE+","+ban+")");
+                    aux=ID;
+                    
+                    ID("tipoMuseo");
+                    ID_tipoM=ID;
+                    inser.execute("insert into tipoMuseo values("+ID+",'"+tipM+"',"+aux+")");
+                    
+                    // =================================================
+                    ID("horario");
+                    ID_horario = ID;
+                    inser.execute("insert into horario values("+ID+",'"+horaE+":"+minE+"','"+horaS+":"+minS+"')");
+                    aux = ID;
+                    
+                    /// ========================
+                    
+                    inser.execute("insert into registro values('"+nomM+"',"+ID_horario+","+ID_cp+","+ID_tipoM+")");
+                    
+                    
+                    
                     Statement st = Bienvenido.conecionP.createStatement(); // activa la sentencia
                     ResultSet rs = st.executeQuery("select * from registro");
                     JOptionPane.showMessageDialog(null, "Agregado");
