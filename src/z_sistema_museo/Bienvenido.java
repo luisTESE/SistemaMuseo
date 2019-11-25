@@ -17,7 +17,7 @@ public class Bienvenido extends javax.swing.JFrame {
     
     public Bienvenido() {
         initComponents();
-        this.setSize(1400, 575);
+        this.setSize(900, 700);
         this.setResizable(false);
 
         contenedor.add(saludo);
